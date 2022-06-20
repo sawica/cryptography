@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/przestawienia-macierzowe-B',
     name: 'przestawienia macierzowe B',
-    component: () => import('../components/MatrixFormA')
+    component: () => import('../components/MatrixFormB')
   },
   {
     path: '/generator',

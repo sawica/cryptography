@@ -31,19 +31,25 @@
 export default {
   name: 'RSAForm',
   data () {
-    const p = 191n
-    const q = 223n
-    const n = p * q
-    const phi = (p - 1n) * (q - 1n)
-    const e = this.generateEncryptionExponent(phi)
-    const d = this.computeDecryptionExponent(e, phi)
+    // const p = 191n
+    // const q = 223n
+    // const n = p * q
+    // const phi = (p - 1n) * (q - 1n)
+    // const e = this.generateEncryptionExponent(phi)
+    // const d = this.computeDecryptionExponent(e, phi)
     // eslint-disable-next-line no-unused-vars
-    const publicKey = { e, n }
+    // const publicKey = { e, n }
     // eslint-disable-next-line no-unused-vars
-    const secretKey = { d, n }
+    // const secretKey = { d, n }
     return {
-      publicKey: { e, n },
-      secretKey: { d, n },
+      p: 191n,
+      q: 223n,
+      // n: this.p * this.q,
+      // phi: (this.p - 1n) * (this.q - 1n),
+      // e: this.generateEncryptionExponent(this.phi),
+      // d: this.computeDecryptionExponent(this.e, this.phi),
+      // publicKey: { this.e, this.n },
+      // secretKey: { this.d, this.n },
       word: '',
       code: null,
       result: ''
@@ -52,11 +58,17 @@ export default {
   methods: {
     encrypt () {
       // eslint-disable-next-line no-undef
-      console.log('pub: ' + this.publicKey + ' sec: ' + this.secretKey)
+      // console.log('pub: ' + this.publicKey + ' sec: ' + this.secretKey)
       const m = this.textToNumber(this.word)
       // eslint-disable-next-line no-undef
-      const { e, n } = this.publicKey
-
+      // const { e, n } = this.publicKey
+      // const e = this.generateEncryptionExponent(this.phi)
+      // const e = this.e
+      // const n = this.n
+      const n = this.p * this.q
+      const phi = (this.p - 1n) * (this.q - 1n)
+      const e = this.generateEncryptionExponent(phi)
+      // d: this.computeDecryptionExponent(this.e, this.phi),
       if (m < 0n || m >= n) {
         throw new Error(`Condition 0 <= m < n not met. m = ${m}`)
       }
@@ -71,13 +83,18 @@ export default {
       return this.result = c
     },
     decrypt () {
-      console.log('pub: ' + this.publicKey + ' sec: ' + this.secretKey)
+      // console.log('pub: ' + this.publicKey + ' sec: ' + this.secretKey)
       let c
       // eslint-disable-next-line prefer-const
       c = this.code
       // eslint-disable-next-line no-undef
-      const { d, n } = this.secretKey
-
+      // const { d, n } = this.secretKey
+      // const d = this.d
+      // const n = this.n
+      const n = this.p * this.q
+      const phi = (this.p - 1n) * (this.q - 1n)
+      const e = this.generateEncryptionExponent(phi)
+      const d = this.computeDecryptionExponent(e, phi)
       const m = c ** d % n
 
       // eslint-disable-next-line no-return-assign
@@ -163,7 +180,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
